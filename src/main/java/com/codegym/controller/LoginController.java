@@ -1,5 +1,11 @@
 package com.codegym.controller;
 
+import com.codegym.model.LoginForm;
+import com.codegym.model.dto.JwtResponse;
+import com.codegym.model.jwt.AppUser;
+import com.codegym.model.jwt.MessageResponse;
+import com.codegym.service.IUserService;
+import com.codegym.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +38,10 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             // Tạo token mới
             String token = jwtService.createToken(authentication);
-            AppUser user1 = userService.getUserByUsername(loginForm.getUsername());
-            JwtResponse jwtResponse = new JwtResponse(user1.getId(), user1.getUsername(), token, user1.getRoles());
-            AppUser account = userService.findByUsername(loginForm.getUsername());
+//            AppUser user1 = userService.getUserByUsername(loginForm.getUsername());
+//            JwtResponse jwtResponse = new JwtResponse(user1.getId(), user1.getUsername(), token, user1.getRoles());
+            AppUser account = userService.getUserByUsername(loginForm.getUsername());
+            JwtResponse jwtResponse = new JwtResponse(account.getId(), account.getUsername(), token, account.getRoles());
 
             if (account.getStatus() != null) {
                 String status = account.getStatus();
